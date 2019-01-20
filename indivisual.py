@@ -1,4 +1,5 @@
 from gene import Gene
+import numpy as np
 
 
 class Indivisual:
@@ -11,7 +12,9 @@ class Indivisual:
         gene = Gene()
         gene.setGene(init_status)
         self.genes.append(gene)
-        # run
+        # init run
+        for i in range(self.max_genes):
+            self.genes.append(self.genes[-1].actGene(np.random.choice(self.genes[-1].action)))
 
     def eval(self, correct_status):
         # if correct
@@ -26,8 +29,8 @@ class Indivisual:
     def distance(self):
         gene = self.genes[-1]
         distance = 0
-        for i in range(16):
-            distance += abs(int(i / 4) - self.genes.index(i)) + abs((i % 4) - self.genes.index(i) % 4)
+        for i in range(1,16+1):
+            distance += abs(int(i / 4) - gene.gene.index(i)) + abs((i % 4) - gene.gene.index(i) % 4)
             return distance
 
     def cross_over(self):

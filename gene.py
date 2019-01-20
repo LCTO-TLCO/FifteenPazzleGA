@@ -6,6 +6,13 @@ class Gene:
 
     def setGene(self, board_status):
         self.gene = board_status
+        self.calcAction()
+
+    def actGene(self, destination):
+        self.gene[destination], self.gene[self.gene.index(16)] = \
+            self.gene[self.gene.index(16)], self.gene[destination]
+        self.calcAction()
+        return self
 
     def calcAction(self):
         self.action = []

@@ -10,7 +10,7 @@ class FifteenPazzle:
         self.max_epock = 300
         self.prob_cross = 0.5
 
-        self.init_status = list(range(1, 16, 1))
+        self.init_status = list(range(1, 16+1, 1))
         self.correct_status = self.init_status
         random.shuffle(self.init_status)
         self.best_fitness = 0
@@ -25,7 +25,8 @@ class FifteenPazzle:
             self.evaluation()
             self.selection()
             self.crossover()
-            print("best[{}] : {}".format(i, self.best_fitness)) if i % 250 == 0 else None
+            if i % 25 == 0:
+                print("best[{}] : {}".format(i, self.best_fitness))
 
     def evaluation(self):
         for i in self.indivisuals:
@@ -36,16 +37,16 @@ class FifteenPazzle:
     def selection(self):
         self.selected = []
         # make roulette
-        weight = ()
+        weight = []
         for i in self.indivisuals:
-            weight += tuple(i.fitness)
-        w = np.array(weight) / sum(weight)
+            weight.append(i.fitness)
+        w = np.array(weight, dtype='float') / sum(weight)
         # select
         for selection in range(self.indivisuals_num):
             self.selected.append(np.random.choice(self.indivisuals, p=w))
 
     def crossover(self):
-        pass
+        self.indivisuals = self.selected
 
 
 if __name__ == "__main__":
